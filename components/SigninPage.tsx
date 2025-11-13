@@ -45,19 +45,32 @@ const SignInPage = () => {
   };
 
   return (
-    <div className="w-full">
-      <h1 className="text-3xl font-semibold text-center">Welcome Back</h1>
-      <p className="text-center text-gray-500 mb-6">Login to continue</p>
+    <div className="w-full text-black dark:text-white">
+      <h1 className="text-3xl font-semibold text-center dark:text-white">
+        Welcome Back
+      </h1>
+
+      <p className="text-center text-gray-500 dark:text-gray-400 mb-6">
+        Login to continue
+      </p>
 
       <div className="space-y-4">
         <div>
-          <label htmlFor="email" className="text-sm text-gray-600 block mb-1">
+          <label
+            htmlFor="email"
+            className="text-sm text-gray-600 dark:text-gray-300 block mb-1"
+          >
             Email
           </label>
+
           <input
             type="email"
             id="email"
-            className="w-full rounded-lg px-4 py-2 border border-gray-300 bg-gray-50 focus:outline-none"
+            className="w-full rounded-lg px-4 py-2 
+              border border-gray-300 dark:border-gray-600 
+              bg-gray-50 dark:bg-gray-800 
+              text-black dark:text-white 
+              focus:outline-none"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -67,7 +80,7 @@ const SignInPage = () => {
         <div>
           <label
             htmlFor="password"
-            className="text-sm text-gray-600 block mb-1"
+            className="text-sm text-gray-600 dark:text-gray-300 block mb-1"
           >
             Password
           </label>
@@ -75,7 +88,11 @@ const SignInPage = () => {
           <input
             type="password"
             id="password"
-            className="w-full rounded-lg px-4 py-2 border border-gray-300 bg-gray-50 focus:outline-none"
+            className="w-full rounded-lg px-4 py-2 
+              border border-gray-300 dark:border-gray-600 
+              bg-gray-50 dark:bg-gray-800 
+              text-black dark:text-white
+              focus:outline-none"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -83,31 +100,41 @@ const SignInPage = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          <input type="checkbox" className="h-4 w-4" />
-          <p className="text-sm text-gray-500">
+          <input
+            type="checkbox"
+            className="h-4 w-4 dark:border-gray-600 dark:bg-gray-700"
+          />
+          <p className="text-sm text-gray-500 dark:text-gray-400">
             I agree to all Terms, Privacy Policy and fees
           </p>
         </div>
 
         {errorMsg && (
-          <p className="text-red-600 text-sm text-center">{errorMsg}</p>
+          <p className="text-red-600 dark:text-red-400 text-sm text-center">
+            {errorMsg}
+          </p>
         )}
 
         {successMsg && (
-          <p className="text-green-600 text-sm text-center">{successMsg}</p>
+          <p className="text-green-600 dark:text-green-400 text-sm text-center">
+            {successMsg}
+          </p>
         )}
 
         <button
           onClick={handleSubmit}
           disabled={loading}
-          className="w-full text-sm bg-purple-600 text-white py-2 rounded-lg font-semibold disabled:opacity-50"
+          className="w-full text-sm bg-purple-600 dark:bg-purple-700 
+            text-white py-2 rounded-lg font-semibold disabled:opacity-50"
         >
           {loading ? "Logging in..." : "Get Started"}
         </button>
 
-        <div className="text-center text-gray-500">OR</div>
+        <div className="text-center text-gray-500 dark:text-gray-400">OR</div>
 
-        <button className="w-full text-sm border border-gray-300 py-2 rounded-lg flex items-center justify-center gap-2">
+        <button className="w-full text-sm border border-gray-300 dark:border-gray-600 
+          py-2 rounded-lg flex items-center justify-center gap-2 
+          bg-white dark:bg-gray-800">
           <Image
             src="/Google.png"
             alt="Google logo"
@@ -115,10 +142,12 @@ const SignInPage = () => {
             height={16}
             priority
           />
-          <span>Sign in with Google</span>
+          <span className="text-black dark:text-white">Sign in with Google</span>
         </button>
 
-        <button className="w-full text-sm border border-gray-300 py-2 rounded-lg flex items-center justify-center gap-2">
+        <button className="w-full text-sm border border-gray-300 dark:border-gray-600 
+          py-2 rounded-lg flex items-center justify-center gap-2 
+          bg-white dark:bg-gray-800">
           <Image
             src="/Facebook.svg"
             alt="Facebook logo"
@@ -126,12 +155,12 @@ const SignInPage = () => {
             height={16}
             priority
           />
-          <span>Sign in with Facebook</span>
+          <span className="text-black dark:text-white">Sign in with Facebook</span>
         </button>
 
-        <p className="text-center text-gray-800 text-sm mt-4">
+        <p className="text-center text-gray-800 dark:text-gray-200 text-sm mt-4">
           Don&apos;t have an account?{" "}
-          <Link href="/sign-up" className="text-blue-600">
+          <Link href="/sign-up" className="text-blue-600 dark:text-blue-400">
             Sign Up
           </Link>
         </p>

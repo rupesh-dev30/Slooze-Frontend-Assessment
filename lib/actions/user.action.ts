@@ -100,7 +100,7 @@ export async function loginUser(params: LoginUserParams) {
       success: true,
       message: "Login successful",
       data: {
-        _id: exisitingUser._id,
+        _id: exisitingUser._id.toString(),
         name: exisitingUser.name,
         email: exisitingUser.email,
         role: exisitingUser.role,

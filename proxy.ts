@@ -6,17 +6,14 @@ interface DecodedUser extends jwt.JwtPayload {
   role: string;
 }
 
-export default function proxy(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const token = req.cookies.get("token")?.value || null;
   const url = req.nextUrl.pathname;
 
   const authPages = ["/sign-in", "/sign-up"];
 
-  if (!token && url.startsWith("/dashboard")) {
-    return NextResponse.redirect(new URL("/sign-in", req.url));
-  }
-
   let user: DecodedUser | null = null;
+
   if (token) {
     try {
       user = jwt.verify(token, process.env.JWT_SECRET!) as DecodedUser;
@@ -27,13 +24,25 @@ export default function proxy(req: NextRequest) {
     }
   }
 
+  const protectedRoutes = ["/dashboard", "/products"];
+
+  if (!user && protectedRoutes.some((r) => url.startsWith(r))) {
+    return NextResponse.redirect(new URL("/sign-in", req.url));
+  }
+
   if (user && authPages.includes(url)) {
     return NextResponse.redirect(new URL("/dashboard", req.url));
   }
 
   if (url.startsWith("/dashboard")) {
     if (user?.role !== "manager") {
-      return NextResponse.redirect(new URL("/", req.url));
+      return NextResponse.redirect(new URL("/no-access", req.url));
+    }
+  }
+
+  if (url.startsWith("/products")) {
+    if (user?.role !== "manager" && user?.role !== "store_keeper") {
+      return NextResponse.redirect(new URL("/no-access", req.url));
     }
   }
 
@@ -41,5 +50,10 @@ export default function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/sign-in", "/sign-up"],
+  matcher: [
+    "/dashboard/:path*",
+    "/products/:path*",
+    "/sign-in",
+    "/sign-up",
+  ],
 };

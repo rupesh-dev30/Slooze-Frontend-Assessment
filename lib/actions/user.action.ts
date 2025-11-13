@@ -115,3 +115,27 @@ export async function loginUser(params: LoginUserParams) {
     };
   }
 }
+
+export async function logoutUser() {
+  try {
+    const cookieStore = await cookies();
+    cookieStore.set("token", "", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+      maxAge: 0,
+    });
+
+    return {
+      success: true,
+      message: "Logged out successfully",
+    };
+  } catch (error) {
+    console.error("Logout Error:", error);
+
+    return {
+      success: false,
+      message: "Failed to logout",
+    };
+  }
+}

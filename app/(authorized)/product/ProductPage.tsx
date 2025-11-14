@@ -28,7 +28,7 @@ export default function ProductPage({ products, role, userId }: ProductPageProps
         <div className="flex items-center gap-4">
           <ThemeToggle />
           <Link
-            href={"/dashboard/product/add"}
+            href={"/product/add"}
             className="px-5 py-2.5 rounded-lg bg-violet-600 text-white font-medium shadow hover:bg-violet-700 transition"
           >
             + Add New Product

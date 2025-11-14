@@ -20,21 +20,21 @@ git clone https://github.com/rupesh-dev30/Slooze-Frontend-Assessment.git
 
 ```
 
-1. **Navigate to the directory**
+2. **Navigate to the directory**
 
 ```
 cd Slooze-Frontend-Assessment
 
 ```
 
-1. **Install dependencies**
+3. **Install dependencies**
 
 ```
 npm install
 
 ```
 
-1. **Create environment file**
+4. **Create environment file**
 - Copy `.env.example` → `.env`
 - Fill in the required variables (MongoDB URI, JWT secret, etc.)
 
@@ -43,14 +43,14 @@ cp .env.example .env
 
 ```
 
-1. **Start the development server**
+5. **Start the development server**
 
 ```
 npm run dev
 
 ```
 
-1. Open in browser:
+6. Open in browser:
     
     [http://localhost:3000](http://localhost:3000/)
 

@@ -45,8 +45,6 @@ export default function AddProductPage() {
       price: Number(form.price),
       discount: Number(form.discount) || 0,
       discountCategory: form.discountCategory,
-      image: "placeholder.jpg",
-      thumbnail: "placeholder-thumb.jpg",
     };
 
     const res = await createProduct(payload);

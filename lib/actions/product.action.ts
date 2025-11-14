@@ -12,7 +12,6 @@ import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 import { DecodedUser } from "@/proxy";
 
-// Extract logged-in user
 async function getUser() {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;

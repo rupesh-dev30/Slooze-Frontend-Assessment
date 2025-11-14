@@ -6,6 +6,7 @@ import { LoginUserParams, RegisterUserParams } from "../shared.types";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
+import { DecodedUser } from "@/proxy";
 
 export async function registerUser(params: RegisterUserParams) {
   try {
@@ -160,5 +161,49 @@ export async function getCurrentUser() {
     };
   } catch {
     return null;
+  }
+}
+
+export async function getUserProfile() {
+  try {
+    await connectToDatabase();
+    const cookieStore = await cookies();
+    const token = cookieStore.get("token")?.value;
+
+    if (!token) return { success: false, message: "No token" };
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as DecodedUser;
+    const user = await User.findById(decoded.id);
+
+    if (!user) return { success: false, message: "User not found" };
+
+    return {
+      success: true,
+      data: {
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    };
+  } catch {
+    return { success: false, message: "Failed to fetch profile" };
+  }
+}
+
+export async function updateUserProfile(payload: { name: string }) {
+  try {
+    await connectToDatabase();
+    const cookieStore = await cookies();
+    const token = cookieStore.get("token")?.value;
+
+    if (!token) return { success: false, message: "Unauthorized" };
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as DecodedUser;
+
+    await User.findByIdAndUpdate(decoded.id, { name: payload.name });
+
+    return { success: true, message: "Profile updated" };
+  } catch {
+    return { success: false, message: "Update failed" };
   }
 }

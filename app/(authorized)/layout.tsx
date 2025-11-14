@@ -1,7 +1,7 @@
-import Sidebar from "@/components/dashboard/Sidebar";
 import TopNav from "@/components/dashboard/TopNav";
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
+import Sidebar from "@/components/Sidebar";
 
 export default async function DashboardLayout({
   children,

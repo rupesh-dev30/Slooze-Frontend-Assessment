@@ -10,7 +10,7 @@ import {
   Settings,
   Store,
 } from "lucide-react";
-import SectionHeader from "./SectionHeader";
+import SectionHeader from "./dashboard/SectionHeader";
 
 type SidebarProps = {
   role: "manager" | "store_keeper" | string;
@@ -74,10 +74,11 @@ const Sidebar = ({ role }: SidebarProps) => {
     setOpenMenu((prev) => ({ ...prev, [key]: !prev[key] }));
   };
 
+  const isManager = role === "manager";
+
   return (
     <aside className="fixed w-72 min-h-screen bg-[#E9EEF4] dark:bg-black border-r border-gray-100 dark:border-gray-800 p-4 hidden lg:block">
-      {/* HEADER */}
-      <div className="flex items-center gap-3 mb-6">
+=      <div className="flex items-center gap-3 mb-6">
         <div className="w-9 h-9 rounded-full bg-purple-600 flex items-center justify-center text-white font-semibold">
           B
         </div>
@@ -91,21 +92,21 @@ const Sidebar = ({ role }: SidebarProps) => {
 
       <nav className="space-y-2 text-sm">
         <NavLink
-          href="/home"
+          href="/"
           icon={<LayoutDashboard size={20} />}
           label="Home"
-          active={pathname.startsWith("/home")}
+          active={pathname === "/"}
         />
 
-        <NavLink
-          href="/dashboard"
-          icon={<LayoutDashboard size={20} />}
-          label="Dashboard"
-          active={pathname.startsWith("/dashboard")}
-          disabled={role !== "manager"}
-        />
+        {isManager && (
+          <NavLink
+            href="/dashboard"
+            icon={<LayoutDashboard size={20} />}
+            label="Dashboard"
+            active={pathname.startsWith("/dashboard")}
+          />
+        )}
 
-        {/* STORE */}
         <SectionHeader
           icon={<Store size={18} />}
           title="Store"
@@ -118,49 +119,54 @@ const Sidebar = ({ role }: SidebarProps) => {
             <NavLink
               href="/product"
               label="Product"
-              active={pathname === "/product"}
               indent
+              active={pathname === "/product"}
             />
             <NavLink
               href="/product/add"
               label="Add Product"
-              active={pathname === "/product/add"}
               indent
+              active={pathname === "/product/add"}
             />
           </>
         )}
 
-        {/* ANALYTIC */}
-        <SectionHeader
-          icon={<BarChart size={18} />}
-          title="Analytic"
-          open={openMenu.analytic}
-          onToggle={() => toggle("analytic")}
-        />
-
-        {openMenu.analytic && (
+        {isManager && (
           <>
-            <NavLink href="/traffic" label="Traffic" indent />
-            <NavLink href="/earning" label="Earning" indent />
+            <SectionHeader
+              icon={<BarChart size={18} />}
+              title="Analytic"
+              open={openMenu.analytic}
+              onToggle={() => toggle("analytic")}
+            />
+
+            {openMenu.analytic && (
+              <>
+                <NavLink href="/dashboard/traffic" label="Traffic" indent />
+                <NavLink href="/dashboard/earning" label="Earning" indent />
+              </>
+            )}
           </>
         )}
 
-        {/* FINANCES */}
-        <SectionHeader
-          icon={<FileChartColumnIncreasing size={18} />}
-          title="Finances"
-          open={openMenu.finances}
-          onToggle={() => toggle("finances")}
-        />
-
-        {openMenu.finances && (
+        {isManager && (
           <>
-            <NavLink href="/payment" label="Payment" indent />
-            <NavLink href="/payout" label="Payout" indent />
+            <SectionHeader
+              icon={<FileChartColumnIncreasing size={18} />}
+              title="Finances"
+              open={openMenu.finances}
+              onToggle={() => toggle("finances")}
+            />
+
+            {openMenu.finances && (
+              <>
+                <NavLink href="/dashboard/payment" label="Payment" indent />
+                <NavLink href="/dashboard/payout" label="Payout" indent />
+              </>
+            )}
           </>
         )}
 
-        {/* ACCOUNT SETTINGS */}
         <SectionHeader
           icon={<Settings size={18} />}
           title="Account Setting"

@@ -24,25 +24,41 @@ export function proxy(req: NextRequest) {
     }
   }
 
-  const protectedRoutes = ["/dashboard", "/products"];
+  const protectedRoutes = [
+    "/dashboard",
+    "/product",
+    "/profile",
+    "/security",
+    "/home",
+  ];
 
   if (!user && protectedRoutes.some((r) => url.startsWith(r))) {
     return NextResponse.redirect(new URL("/sign-in", req.url));
   }
 
   if (user && authPages.includes(url)) {
-    return NextResponse.redirect(new URL("/dashboard", req.url));
+    return NextResponse.redirect(new URL("/home", req.url));
   }
 
-  if (url.startsWith("/dashboard")) {
-    if (user?.role !== "manager") {
+  if (url.startsWith("/dashboard") && user?.role !== "manager") {
+    return NextResponse.redirect(new URL("/no-access", req.url));
+  }
+
+  if (url.startsWith("/product")) {
+    if (user?.role !== "manager" && user?.role !== "store_keeper") {
       return NextResponse.redirect(new URL("/no-access", req.url));
     }
   }
 
-  if (url.startsWith("/products")) {
-    if (user?.role !== "manager" && user?.role !== "store_keeper") {
-      return NextResponse.redirect(new URL("/no-access", req.url));
+  if (url.startsWith("/profile")) {
+    if (!user) {
+      return NextResponse.redirect(new URL("/sign-in", req.url));
+    }
+  }
+
+  if (url.startsWith("/security")) {
+    if (!user) {
+      return NextResponse.redirect(new URL("/sign-in", req.url));
     }
   }
 
@@ -52,7 +68,10 @@ export function proxy(req: NextRequest) {
 export const config = {
   matcher: [
     "/dashboard/:path*",
-    "/products/:path*",
+    "/product/:path*",
+    "/profile/:path*",
+    "/security/:path*",
+    "/home/:path*",
     "/sign-in",
     "/sign-up",
   ],

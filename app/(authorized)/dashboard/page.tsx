@@ -12,7 +12,7 @@ const DashboardPage = () => {
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl font-bold">Dashboard</h1>
 
-          <Link href={"/dashboard/product/add"} className="px-4 py-2 bg-violet-600 text-white rounded-md hover:bg-violet-700 transition">
+          <Link href={"/product/add"} className="px-4 py-2 bg-violet-600 text-white rounded-md hover:bg-violet-700 transition">
             + Add New Product
           </Link>
         </div>

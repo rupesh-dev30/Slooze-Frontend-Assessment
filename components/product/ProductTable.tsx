@@ -7,11 +7,20 @@ import { deleteProduct } from "@/lib/actions/product.action";
 
 export default function ProductTable({
   products,
+  role,
+  userId,
 }: {
   products: ProductDocument[];
+  role: string;
+  userId: string;
 }) {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+
+  const canEditDelete = (productUser: string) => {
+    if (role === "manager") return true;
+    return productUser === userId;
+  };
 
   const handleDelete = (id: string) => {
     if (!confirm("Are you sure you want to delete this product?")) return;
@@ -20,7 +29,7 @@ export default function ProductTable({
       const res = await deleteProduct(id);
 
       if (res.success) {
-        router.refresh(); // Refresh page and re-fetch data
+        router.refresh();
       } else {
         alert("Failed to delete product");
       }
@@ -41,38 +50,44 @@ export default function ProductTable({
         </thead>
 
         <tbody>
-          {products.map((p) => (
-            <tr
-              key={p._id}
-              className="border-b border-gray-100 dark:border-gray-700"
-            >
-              <td className="py-4">{p.name}</td>
-              <td className="text-center">{p.views}</td>
-              <td className="text-center">₹{p.price}</td>
-              <td className="text-center">₹{p.revenue}</td>
+          {products.map((p) => {
+            const access = canEditDelete(p.user);
 
-              <td className="py-4 flex gap-2 justify-center">
-                {/* EDIT BUTTON */}
-                <button
-                  onClick={() =>
-                    router.push(`/dashboard/product/edit/${p._id}`)
-                  }
-                  className="px-3 py-1 text-xs bg-gray-300 dark:bg-gray-700 rounded hover:bg-gray-400 dark:hover:bg-gray-600"
-                >
-                  Edit
-                </button>
+            return (
+              <tr
+                key={p._id}
+                className="border-b border-gray-100 dark:border-gray-700"
+              >
+                <td className="py-4">{p.name}</td>
+                <td className="text-center">{p.views}</td>
+                <td className="text-center">₹{p.price}</td>
+                <td className="text-center">₹{p.revenue}</td>
 
-                {/* DELETE BUTTON */}
-                <button
-                  onClick={() => handleDelete(p._id)}
-                  disabled={isPending}
-                  className="px-3 py-1 text-xs bg-red-500 text-white rounded hover:bg-red-600 disabled:opacity-50"
-                >
-                  {isPending ? "..." : "Delete"}
-                </button>
-              </td>
-            </tr>
-          ))}
+                <td className="py-4 flex gap-2 justify-center">
+                  {access ? (
+                    <>
+                      <button
+                        onClick={() => router.push(`/product/edit/${p._id}`)}
+                        className="px-3 py-1 text-xs bg-gray-300 dark:bg-gray-700 rounded hover:bg-gray-400 dark:hover:bg-gray-600"
+                      >
+                        Edit
+                      </button>
+
+                      <button
+                        onClick={() => handleDelete(p._id)}
+                        disabled={isPending}
+                        className="px-3 py-1 text-xs bg-red-500 text-white rounded hover:bg-red-600 disabled:opacity-50"
+                      >
+                        {isPending ? "..." : "Delete"}
+                      </button>
+                    </>
+                  ) : (
+                    <span className="text-gray-400 text-xs">No Permission</span>
+                  )}
+                </td>
+              </tr>
+            );
+          })}
 
           {products.length === 0 && (
             <tr>

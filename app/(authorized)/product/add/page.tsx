@@ -52,7 +52,7 @@ export default function AddProductPage() {
     const res = await createProduct(payload);
 
     if (res.success) {
-      router.push("/dashboard/product");
+      router.push("/product");
     } else {
       alert("Failed to create product");
     }
@@ -61,20 +61,18 @@ export default function AddProductPage() {
   };
 
   return (
-    <div className="w-full min-h-screen bg-[#E9EEF4] dark:bg-black text-gray-900 dark:text-white transition mt-4">
-      {/* Header */}
+    <div className="mt-6 w-full min-h-screen bg-[#E9EEF4] dark:bg-black text-gray-900 dark:text-white transition">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-semibold tracking-tight">Add Product</h1>
 
         <Link
-          href={"/dashboard/product/add"}
+          href={"/product/add"}
           className="px-5 py-2.5 rounded-lg bg-violet-600 text-white font-medium shadow hover:bg-violet-700 transition"
         >
           + Add New Product
         </Link>
       </div>
 
-      {/* Actions */}
       <div className="flex justify-between items-center gap-4 mb-6">
         <h1 className="dark:text-white text-black text-xl font-bold">
           Add New Product
@@ -108,14 +106,11 @@ export default function AddProductPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* LEFT FORM PANEL */}
         <div className="lg:col-span-2 space-y-8">
-          {/* GENERAL INFORMATION */}
           <section className="p-6 bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm">
             <h2 className="text-lg font-semibold mb-4">General Information</h2>
 
             <div className="space-y-5">
-              {/* NAME */}
               <div>
                 <label className="text-sm text-gray-600 dark:text-gray-400">
                   Product Name
@@ -128,8 +123,6 @@ export default function AddProductPage() {
                   className="w-full mt-1 p-3 rounded-lg bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700"
                 />
               </div>
-
-              {/* CATEGORY */}
               <div>
                 <label className="text-sm text-gray-600 dark:text-gray-400">
                   Product Category
@@ -146,8 +139,7 @@ export default function AddProductPage() {
                   <option value="Shoes">Shoes</option>
                 </select>
               </div>
-
-              {/* DESCRIPTION */}
+              {" "}
               <div>
                 <label className="text-sm text-gray-600 dark:text-gray-400">
                   Description
@@ -161,8 +153,6 @@ export default function AddProductPage() {
                   className="w-full mt-1 p-3 rounded-lg bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700"
                 />
               </div>
-
-              {/* TAGS */}
               <div>
                 <label className="text-sm text-gray-600 dark:text-gray-400">
                   Tag Keyword
@@ -178,12 +168,10 @@ export default function AddProductPage() {
             </div>
           </section>
 
-          {/* PRICING SECTION */}
           <section className="p-6 bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm">
             <h2 className="text-lg font-semibold mb-4">Pricing</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* PRICE */}
               <div>
                 <label className="text-sm text-gray-600 dark:text-gray-400">
                   Price
@@ -197,7 +185,6 @@ export default function AddProductPage() {
                 />
               </div>
 
-              {/* DISCOUNT */}
               <div>
                 <label className="text-sm text-gray-600 dark:text-gray-400">
                   Discount
@@ -211,7 +198,6 @@ export default function AddProductPage() {
                 />
               </div>
 
-              {/* DISCOUNT CATEGORY */}
               <div>
                 <label className="text-sm text-gray-600 dark:text-gray-400">
                   Discount Category
@@ -239,7 +225,6 @@ export default function AddProductPage() {
             </div>
           </div>
 
-          {/* THUMBNAIL IMAGE */}
           <div className="p-6 bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm">
             <h2 className="text-lg font-semibold mb-4">Thumbnail Product</h2>
             <div className="border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-xl h-52 flex items-center justify-center text-gray-500 dark:text-gray-400">

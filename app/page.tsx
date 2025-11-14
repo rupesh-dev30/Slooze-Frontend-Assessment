@@ -1,12 +1,7 @@
-import ThemeToggle from '@/components/ThemeToggle'
-import React from 'react'
+import { getCurrentUser } from "@/lib/actions/user.action";
+import HomeContent, { CurrentUser } from "@/components/HomeContent";
 
-const Home = () => {
-  return (
-    <div className='text-center text-blue-400'>
-      <ThemeToggle />
-    </div>
-  )
+export default async function HomePage() {
+  const user: CurrentUser | null = await getCurrentUser();
+  return <HomeContent user={user} />;
 }
-
-export default Home

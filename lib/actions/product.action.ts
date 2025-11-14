@@ -45,8 +45,16 @@ export async function createProduct(
       success: true,
       message: "Product created successfully",
       data: {
-        ...product.toObject(),
         _id: product._id.toString(),
+        user: product.user?.toString(),
+        name: product.name,
+        image: product.image,
+        views: product.views,
+        price: product.price,
+        revenue: product.revenue,
+        status: product.status,
+        createdAt: product.createdAt?.toISOString(),
+        updatedAt: product.updatedAt?.toISOString(),
       },
     };
   } catch (error) {
@@ -72,6 +80,7 @@ export async function getProducts(
 
     if (status) query.status = status;
 
+    // Extract role
     const cookieStore = await cookies();
     const token = cookieStore.get("token")?.value;
 
@@ -87,7 +96,13 @@ export async function getProducts(
       } catch {}
     }
 
-    if (role !== "manager") query.user = userId;
+    // ROLE BASED PRODUCT FILTERING
+    // Manager     → See all
+    // StoreKeeper → See all
+    // User        → Only own products
+    if (role !== "manager" && role !== "store_keeper") {
+      query.user = userId;
+    }
 
     const skip = (page - 1) * limit;
 

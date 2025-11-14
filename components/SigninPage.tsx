@@ -38,7 +38,7 @@ const SignInPage = () => {
     setSuccessMsg("Login successful!");
 
     setTimeout(() => {
-      router.push("/dashboard");
+      router.push("/home");
     }, 1000);
 
     setLoading(false);

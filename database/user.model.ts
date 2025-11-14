@@ -6,8 +6,8 @@ const userSchema = new Schema({
   password: { type: String, required: true },
   role: {
     type: String,
-    enum: ["user", "store_keeper", "manager"],
-    default: "user",
+    enum: ["store_keeper", "manager"],
+    default: "store_keeper",
     required: true,
   },
 });

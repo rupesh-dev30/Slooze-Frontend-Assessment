@@ -6,12 +6,15 @@ import { useState } from "react";
 import {
   BarChart,
   FileChartColumnIncreasing,
-  Home,
   LayoutDashboard,
   Settings,
   Store,
 } from "lucide-react";
 import SectionHeader from "./SectionHeader";
+
+type SidebarProps = {
+  role: "manager" | "store_keeper" | string;
+};
 
 const NavLink = ({
   href,
@@ -19,13 +22,26 @@ const NavLink = ({
   icon,
   active,
   indent = false,
+  disabled = false,
 }: {
   href: string;
   label: string;
+  icon?: React.ReactNode;
   active?: boolean;
   indent?: boolean;
-  icon?: React.ReactNode;
+  disabled?: boolean;
 }) => {
+  if (disabled) {
+    return (
+      <div
+        className={`flex items-center gap-2 px-3 py-2 rounded-md ml-6 opacity-40 cursor-not-allowed`}
+      >
+        {icon && <span className="text-gray-500">{icon}</span>}
+        {label}
+      </div>
+    );
+  }
+
   return (
     <Link
       href={href}
@@ -43,7 +59,7 @@ const NavLink = ({
   );
 };
 
-const Sidebar = () => {
+const Sidebar = ({ role }: SidebarProps) => {
   const pathname = usePathname();
 
   const [openMenu, setOpenMenu] = useState({
@@ -60,7 +76,7 @@ const Sidebar = () => {
 
   return (
     <aside className="fixed w-72 min-h-screen bg-[#E9EEF4] dark:bg-black border-r border-gray-100 dark:border-gray-800 p-4 hidden lg:block">
-      {/* BRAND HEADER */}
+      {/* HEADER */}
       <div className="flex items-center gap-3 mb-6">
         <div className="w-9 h-9 rounded-full bg-purple-600 flex items-center justify-center text-white font-semibold">
           B
@@ -73,13 +89,12 @@ const Sidebar = () => {
         </div>
       </div>
 
-      {/* MENU */}
       <nav className="space-y-2 text-sm">
         <NavLink
-          href="/"
-          icon={<Home size={20} />}
+          href="/home"
+          icon={<LayoutDashboard size={20} />}
           label="Home"
-          active={pathname === "/"}
+          active={pathname.startsWith("/home")}
         />
 
         <NavLink
@@ -87,6 +102,7 @@ const Sidebar = () => {
           icon={<LayoutDashboard size={20} />}
           label="Dashboard"
           active={pathname.startsWith("/dashboard")}
+          disabled={role !== "manager"}
         />
 
         {/* STORE */}
@@ -100,15 +116,15 @@ const Sidebar = () => {
         {openMenu.store && (
           <>
             <NavLink
-              href="/dashboard/product"
+              href="/product"
               label="Product"
-              active={pathname === "/dashboard/product"}
+              active={pathname === "/product"}
               indent
             />
             <NavLink
-              href="/dashboard/product/add"
+              href="/product/add"
               label="Add Product"
-              active={pathname === "/dashboard/product/add"}
+              active={pathname === "/product/add"}
               indent
             />
           </>
@@ -124,8 +140,8 @@ const Sidebar = () => {
 
         {openMenu.analytic && (
           <>
-            <NavLink href="/dashboard/traffic" label="Traffic" indent />
-            <NavLink href="/dashboard/earning" label="Earning" indent />
+            <NavLink href="/traffic" label="Traffic" indent />
+            <NavLink href="/earning" label="Earning" indent />
           </>
         )}
 
@@ -139,8 +155,8 @@ const Sidebar = () => {
 
         {openMenu.finances && (
           <>
-            <NavLink href="/dashboard/payment" label="Payment" indent />
-            <NavLink href="/dashboard/payout" label="Payout" indent />
+            <NavLink href="/payment" label="Payment" indent />
+            <NavLink href="/payout" label="Payout" indent />
           </>
         )}
 
@@ -154,18 +170,10 @@ const Sidebar = () => {
 
         {openMenu.account && (
           <>
-            <NavLink href="/dashboard/profile" label="My Profile" indent />
-            <NavLink href="/dashboard/security" label="Security" indent />
+            <NavLink href="/profile" label="My Profile" indent />
+            <NavLink href="/security" label="Security" indent />
           </>
         )}
-
-        {/* HELP */}
-        <SectionHeader
-          icon={<Settings size={18} />}
-          title="Help And Support"
-          open={openMenu.help}
-          onToggle={() => toggle("help")}
-        />
       </nav>
     </aside>
   );

@@ -22,7 +22,7 @@ export default function EditProductForm({ product }: { product: ProductDocument 
       });
 
       if (res.success) {
-        router.push("/dashboard/product");
+        router.push("/product");
       } else {
         alert("Update failed");
       }

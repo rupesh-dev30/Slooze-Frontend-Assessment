@@ -6,10 +6,17 @@ import ThemeToggle from "../ThemeToggle";
 import { logoutUser } from "@/lib/actions/user.action";
 import { useRouter } from "next/navigation";
 
-const TopNav = () => {
+const TopNav = ({ role }: { role: string }) => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+
+  const displayRole =
+    role === "manager"
+      ? "Manager"
+      : role === "store_keeper"
+      ? "Store Keeper"
+      : "User";
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -37,7 +44,6 @@ const TopNav = () => {
             size={16}
             className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
           />
-
           <input
             placeholder="Search"
             className="w-full rounded-md border border-gray-300 dark:border-gray-700 pl-9 pr-3 py-2 bg-gray-50 dark:bg-gray-900 text-sm outline-none focus:border-purple-500"
@@ -55,7 +61,7 @@ const TopNav = () => {
             className="flex items-center gap-2 px-3 py-1 border rounded-md text-sm border-gray-300 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 cursor-pointer select-none"
             onClick={() => setOpen(!open)}
           >
-            Admin{" "}
+            {displayRole}
             <ChevronDown
               size={16}
               className={`${open ? "rotate-180" : ""} transition`}

@@ -8,7 +8,7 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const cookieStore = (await cookies());
+  const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
 
   let role: string = "guest";
@@ -28,7 +28,7 @@ export default async function DashboardLayout({
         <Sidebar role={role} />
 
         <div className="lg:pl-78 flex-1 p-6">
-          <TopNav />
+          <TopNav role={role} />
 
           {children}
         </div>

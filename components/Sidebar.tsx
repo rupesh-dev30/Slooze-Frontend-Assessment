@@ -78,7 +78,7 @@ const Sidebar = ({ role }: SidebarProps) => {
 
   return (
     <aside className="fixed w-72 min-h-screen bg-[#E9EEF4] dark:bg-black border-r border-gray-100 dark:border-gray-800 p-4 hidden lg:block">
-=      <div className="flex items-center gap-3 mb-6">
+      <div className="flex items-center gap-3 mb-6">
         <div className="w-9 h-9 rounded-full bg-purple-600 flex items-center justify-center text-white font-semibold">
           B
         </div>

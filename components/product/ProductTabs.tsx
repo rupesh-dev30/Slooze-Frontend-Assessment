@@ -1,7 +1,12 @@
-const ProductTabs = ({ tab, setTab }) => {
+interface ProductTabsProps {
+  tab: "published" | "draft";
+  setTab: (tab: "published" | "draft") => void;
+}
+
+const ProductTabs = ({ tab, setTab }: ProductTabsProps) => {
   return (
     <div className="flex items-center gap-10 border-b border-gray-300 dark:border-gray-800 pb-4">
-      {["published", "draft"].map((t) => (
+      { (["published", "draft"] as const).map((t) => (
         <button
           key={t}
           onClick={() => setTab(t)}

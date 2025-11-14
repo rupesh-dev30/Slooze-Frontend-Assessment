@@ -1,6 +1,17 @@
 import Image from "next/image";
 
-const ProductRow = ({ product }) => {
+interface ProductProps {
+  product: {
+    id: string;
+    name: string;
+    image: string;
+    views: number;
+    price: number;
+    revenue: number;
+  };
+}
+
+const ProductRow = ({ product }: ProductProps) => {
   return (
     <tr className="border-b border-gray-200 dark:border-gray-800 hover:bg-gray-100 dark:hover:bg-gray-800 transition">
       <td className="py-4 pl-4 flex items-center gap-3">

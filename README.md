@@ -10,6 +10,52 @@
 
 ---
 
+
+### ⚙️ **Local Installation Instructions**
+
+1. **Clone the repository**
+
+```
+git clone https://github.com/rupesh-dev30/Slooze-Frontend-Assessment.git
+
+```
+
+1. **Navigate to the directory**
+
+```
+cd Slooze-Frontend-Assessment
+
+```
+
+1. **Install dependencies**
+
+```
+npm install
+
+```
+
+1. **Create environment file**
+- Copy `.env.example` → `.env`
+- Fill in the required variables (MongoDB URI, JWT secret, etc.)
+
+```
+cp .env.example .env
+
+```
+
+1. **Start the development server**
+
+```
+npm run dev
+
+```
+
+1. Open in browser:
+    
+    [http://localhost:3000](http://localhost:3000/)
+
+---
+
 # **0. Test Credentials (For Evaluation)**
 
 Two roles are pre-seeded in the database for quick evaluation.

@@ -83,43 +83,35 @@ export default function ProductTable({
                 </td>
 
                 <td className="py-4 flex gap-2 justify-center">
-                  <button
-                    onClick={() => canModify && toggleStatus(p)}
-                    disabled={!canModify}
-                    className={`px-3 py-1 text-xs rounded transition ${
-                      canModify
-                        ? "bg-blue-500 text-white hover:bg-blue-600"
-                        : "bg-blue-300/50 text-white/50 cursor-not-allowed"
-                    }`}
-                  >
-                    {p.status === "published" ? "Unpublish" : "Publish"}
-                  </button>
+                  {/* 🎯 SHOW NOTHING IF user has no permission */}
+                  {canModify && (
+                    <>
+                      {/* Publish / Unpublish */}
+                      <button
+                        onClick={() => toggleStatus(p)}
+                        className="px-3 py-1 text-xs rounded bg-blue-500 text-white hover:bg-blue-600"
+                      >
+                        {p.status === "published" ? "Unpublish" : "Publish"}
+                      </button>
 
-                  <button
-                    onClick={() =>
-                      canModify && router.push(`/product/edit/${p._id}`)
-                    }
-                    disabled={!canModify}
-                    className={`px-3 py-1 text-xs rounded transition ${
-                      canModify
-                        ? "bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600"
-                        : "bg-gray-300/40 dark:bg-gray-700/40 text-white/40 cursor-not-allowed"
-                    }`}
-                  >
-                    Edit
-                  </button>
+                      {/* Edit */}
+                      <button
+                        onClick={() => router.push(`/product/edit/${p._id}`)}
+                        className="px-3 py-1 text-xs rounded bg-gray-300 dark:bg-gray-700 hover:bg-gray-400 dark:hover:bg-gray-600"
+                      >
+                        Edit
+                      </button>
 
-                  <button
-                    onClick={() => canModify && handleDelete(p._id)}
-                    disabled={!canModify || isPending}
-                    className={`px-3 py-1 text-xs rounded transition ${
-                      canModify
-                        ? "bg-red-500 text-white hover:bg-red-600"
-                        : "bg-red-400/40 text-white/40 cursor-not-allowed"
-                    }`}
-                  >
-                    {isPending ? "..." : "Delete"}
-                  </button>
+                      {/* Delete */}
+                      <button
+                        onClick={() => handleDelete(p._id)}
+                        disabled={isPending}
+                        className="px-3 py-1 text-xs rounded bg-red-500 text-white hover:bg-red-600 disabled:opacity-50"
+                      >
+                        {isPending ? "..." : "Delete"}
+                      </button>
+                    </>
+                  )}
                 </td>
               </tr>
             );

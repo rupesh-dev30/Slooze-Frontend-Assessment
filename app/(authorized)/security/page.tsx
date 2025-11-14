@@ -46,7 +46,7 @@ export default function SecurityPage() {
   };
 
   return (
-    <div className="w-full p-8 bg-[#E9EEF4] dark:bg-black min-h-screen text-gray-900 dark:text-white rounded-lg">
+    <div className="w-full pt-8 bg-[#E9EEF4] dark:bg-black min-h-screen text-gray-900 dark:text-white rounded-lg">
       <h1 className="text-3xl font-semibold mb-6">Security Settings</h1>
 
       <div className="max-w-xl bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-800 shadow-sm space-y-6">

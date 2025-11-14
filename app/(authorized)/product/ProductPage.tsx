@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useMemo } from "react";
-import ThemeToggle from "@/components/ThemeToggle";
 import ProductTabs from "@/components/product/ProductTabs";
 import ProductTable from "@/components/product/ProductTable";
 import ProductStatsGroup from "@/components/product/ProductStatsGroup";
@@ -26,7 +25,6 @@ export default function ProductPage({ products, role, userId }: ProductPageProps
         <h1 className="text-3xl font-semibold tracking-tight">Product</h1>
 
         <div className="flex items-center gap-4">
-          <ThemeToggle />
           <Link
             href={"/product/add"}
             className="px-5 py-2.5 rounded-lg bg-violet-600 text-white font-medium shadow hover:bg-violet-700 transition"

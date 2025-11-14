@@ -58,7 +58,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="w-full p-8 bg-[#E9EEF4] dark:bg-black min-h-screen text-gray-900 dark:text-white rounded-lg">
+    <div className="w-full pt-8 bg-[#E9EEF4] dark:bg-black min-h-screen text-gray-900 dark:text-white rounded-lg">
       <h1 className="text-3xl font-semibold mb-6">My Profile</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

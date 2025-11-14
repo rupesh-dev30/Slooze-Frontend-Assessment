@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 
-interface DecodedUser extends jwt.JwtPayload {
+export interface DecodedUser extends jwt.JwtPayload {
   id: string;
   role: string;
 }

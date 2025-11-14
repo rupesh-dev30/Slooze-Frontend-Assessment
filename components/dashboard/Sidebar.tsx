@@ -1,17 +1,51 @@
 "use client";
 
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 import { useState } from "react";
 import {
   BarChart,
-  ChevronDown,
   FileChartColumnIncreasing,
   Home,
   LayoutDashboard,
   Settings,
   Store,
 } from "lucide-react";
+import SectionHeader from "./SectionHeader";
+
+const NavLink = ({
+  href,
+  label,
+  icon,
+  active,
+  indent = false,
+}: {
+  href: string;
+  label: string;
+  active?: boolean;
+  indent?: boolean;
+  icon?: React.ReactNode;
+}) => {
+  return (
+    <Link
+      href={href}
+      className={`flex items-center gap-2 px-3 py-2 rounded-md transition ${
+        indent ? "ml-6" : ""
+      } ${
+        active
+          ? "bg-gray-200 dark:bg-gray-800 font-semibold text-black dark:text-white"
+          : "hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+      }`}
+    >
+      {icon && <span className="text-gray-500">{icon}</span>}
+      {label}
+    </Link>
+  );
+};
 
 const Sidebar = () => {
+  const pathname = usePathname();
+
   const [openMenu, setOpenMenu] = useState({
     store: true,
     analytic: true,
@@ -26,6 +60,7 @@ const Sidebar = () => {
 
   return (
     <aside className="fixed w-72 min-h-screen bg-[#E9EEF4] dark:bg-black border-r border-gray-100 dark:border-gray-800 p-4 hidden lg:block">
+      {/* BRAND HEADER */}
       <div className="flex items-center gap-3 mb-6">
         <div className="w-9 h-9 rounded-full bg-purple-600 flex items-center justify-center text-white font-semibold">
           B
@@ -38,21 +73,25 @@ const Sidebar = () => {
         </div>
       </div>
 
-      <nav className="space-y-1 text-sm">
-        <div className="px-3 py-2 rounded-md bg-white dark:bg-gray-800 shadow-sm flex items-center gap-2 cursor-pointer">
-          <Home size={20} className="text-gray-500" />
-          <p className="font-medium text-black dark:text-gray-200">Home</p>
-        </div>
+      {/* MENU */}
+      <nav className="space-y-2 text-sm">
+        <NavLink
+          href="/"
+          icon={<Home size={20} />}
+          label="Home"
+          active={pathname === "/"}
+        />
 
-        <div className="px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 flex items-center gap-2 cursor-pointer shadow-sm bg-white dark:bg-gray-800">
-          <LayoutDashboard size={20} className="text-gray-500" />
-          <p className="font-medium text-gray-800 dark:text-gray-200">
-            Dashboard
-          </p>
-        </div>
+        <NavLink
+          href="/dashboard"
+          icon={<LayoutDashboard size={20} />}
+          label="Dashboard"
+          active={pathname.startsWith("/dashboard")}
+        />
 
+        {/* STORE */}
         <SectionHeader
-          icon={<Store size={18} className="text-gray-600" />}
+          icon={<Store size={18} />}
           title="Store"
           open={openMenu.store}
           onToggle={() => toggle("store")}
@@ -60,13 +99,24 @@ const Sidebar = () => {
 
         {openMenu.store && (
           <>
-            <ActiveItem label="Product" />
-            <NavItem label="Add Product" />
+            <NavLink
+              href="/dashboard/product"
+              label="Product"
+              active={pathname === "/dashboard/product"}
+              indent
+            />
+            <NavLink
+              href="/dashboard/product/add"
+              label="Add Product"
+              active={pathname === "/dashboard/product/add"}
+              indent
+            />
           </>
         )}
 
+        {/* ANALYTIC */}
         <SectionHeader
-          icon={<BarChart size={18} className="text-gray-600" />}
+          icon={<BarChart size={18} />}
           title="Analytic"
           open={openMenu.analytic}
           onToggle={() => toggle("analytic")}
@@ -74,15 +124,14 @@ const Sidebar = () => {
 
         {openMenu.analytic && (
           <>
-            <NavItem label="Traffic" />
-            <NavItem label="Earning" />
+            <NavLink href="/dashboard/traffic" label="Traffic" indent />
+            <NavLink href="/dashboard/earning" label="Earning" indent />
           </>
         )}
 
+        {/* FINANCES */}
         <SectionHeader
-          icon={
-            <FileChartColumnIncreasing size={18} className="text-gray-600" />
-          }
+          icon={<FileChartColumnIncreasing size={18} />}
           title="Finances"
           open={openMenu.finances}
           onToggle={() => toggle("finances")}
@@ -90,13 +139,14 @@ const Sidebar = () => {
 
         {openMenu.finances && (
           <>
-            <NavItem label="Payment" />
-            <NavItem label="Payout" />
+            <NavLink href="/dashboard/payment" label="Payment" indent />
+            <NavLink href="/dashboard/payout" label="Payout" indent />
           </>
         )}
 
+        {/* ACCOUNT SETTINGS */}
         <SectionHeader
-          icon={<Settings size={18} className="text-gray-600" />}
+          icon={<Settings size={18} />}
           title="Account Setting"
           open={openMenu.account}
           onToggle={() => toggle("account")}
@@ -104,13 +154,14 @@ const Sidebar = () => {
 
         {openMenu.account && (
           <>
-            <NavItem label="My Profile" />
-            <NavItem label="Security" />
+            <NavLink href="/dashboard/profile" label="My Profile" indent />
+            <NavLink href="/dashboard/security" label="Security" indent />
           </>
         )}
 
+        {/* HELP */}
         <SectionHeader
-          icon={<Settings size={18} className="text-gray-600" />}
+          icon={<Settings size={18} />}
           title="Help And Support"
           open={openMenu.help}
           onToggle={() => toggle("help")}
@@ -121,43 +172,3 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-
-const SectionHeader = ({
-  icon,
-  title,
-  open,
-  onToggle,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  open: boolean;
-  onToggle: () => void;
-}) => (
-  <div
-    onClick={onToggle}
-    className="mt-4 text-xs text-gray-500 uppercase flex items-center justify-between cursor-pointer"
-  >
-    <div className="flex items-center gap-2">
-      {icon}
-      <p className="font-semibold text-gray-600">{title}</p>
-    </div>
-    <ChevronDown
-      size={18}
-      className={`text-gray-500 transition-transform ${
-        open ? "rotate-180" : "rotate-0"
-      }`}
-    />
-  </div>
-);
-
-const NavItem = ({ label }: { label: string }) => (
-  <div className="px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer ml-6">
-    {label}
-  </div>
-);
-
-const ActiveItem = ({ label }: { label: string }) => (
-  <div className="px-3 py-2 bg-gray-100 dark:bg-gray-800 rounded-md ml-6 font-medium cursor-pointer">
-    {label}
-  </div>
-);

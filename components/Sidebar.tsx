@@ -142,8 +142,18 @@ const Sidebar = ({ role }: SidebarProps) => {
 
             {openMenu.analytic && (
               <>
-                <NavLink href="/dashboard/traffic" label="Traffic" indent />
-                <NavLink href="/dashboard/earning" label="Earning" indent />
+                <NavLink
+                  href="/dashboard/traffic"
+                  label="Traffic"
+                  indent
+                  active={pathname.startsWith("/dashboard/traffic")}
+                />
+                <NavLink
+                  href="/dashboard/earning"
+                  label="Earning"
+                  indent
+                  active={pathname.startsWith("/dashboard/earning")}
+                />
               </>
             )}
           </>
@@ -160,8 +170,18 @@ const Sidebar = ({ role }: SidebarProps) => {
 
             {openMenu.finances && (
               <>
-                <NavLink href="/dashboard/payment" label="Payment" indent />
-                <NavLink href="/dashboard/payout" label="Payout" indent />
+                <NavLink
+                  href="/dashboard/payment"
+                  label="Payment"
+                  indent
+                  active={pathname.startsWith("/dashboard/payment")}
+                />
+                <NavLink
+                  href="/dashboard/payout"
+                  label="Payout"
+                  indent
+                  active={pathname.startsWith("/dashboard/payout")}
+                />
               </>
             )}
           </>
@@ -176,8 +196,8 @@ const Sidebar = ({ role }: SidebarProps) => {
 
         {openMenu.account && (
           <>
-            <NavLink href="/profile" label="My Profile" indent />
-            <NavLink href="/security" label="Security" indent />
+            <NavLink href="/profile" label="My Profile" indent active={pathname.startsWith("/profile")} />
+            <NavLink href="/security" label="Security" indent active={pathname.startsWith("/security")} />
           </>
         )}
       </nav>
